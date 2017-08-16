@@ -46,7 +46,7 @@ class Grok(object):
             if re.search('%{\w+(:\w+)?}', py_regex_pattern) is None:
                 break
 
-        self.regex_obj = re.compile(py_regex_pattern)
+        self.regex_obj = re.compile(py_regex_pattern, re.UNICODE)
 
     def match(self, text):
         """If text is matched with pattern, return variable names specified(%{pattern:variable name})
