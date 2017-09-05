@@ -58,7 +58,7 @@ class Grok(object):
         or custom_patterns_dir.
         """
 
-        match_obj = self.regex_obj.search(text)
+        match_obj = self.regex_obj.match(text)
 
         if match_obj == None:
             return None
