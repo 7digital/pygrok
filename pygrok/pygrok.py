@@ -52,14 +52,14 @@ class Grok(object):
 
         self.regex_obj = re.compile(py_regex_pattern, re.UNICODE)
 
-    def match(self, text):
+    def match(self, text, **kwargs):
         """If text is matched with pattern, return variable names specified(%{pattern:variable name})
         in pattern and their corresponding values.If not matched, return None.
         custom patterns can be passed in by custom_patterns(pattern name, pattern regular expression pair)
         or custom_patterns_dir.
         """
 
-        match_obj = self.regex_obj.search(text)
+        match_obj = self.regex_obj.search(text, **kwargs)
 
         if match_obj == None:
             return None
