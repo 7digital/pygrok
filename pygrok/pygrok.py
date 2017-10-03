@@ -52,7 +52,7 @@ class Grok(object):
 
         self.regex_obj = re.compile(py_regex_pattern, re.UNICODE)
 
-    def match(self, text, **kwargs):
+    def match(self, text, type_coercion=False, **kwargs):
         """If text is matched with pattern, return variable names specified(%{pattern:variable name})
         in pattern and their corresponding values.If not matched, return None.
         custom patterns can be passed in by custom_patterns(pattern name, pattern regular expression pair)
@@ -61,17 +61,18 @@ class Grok(object):
 
         match_obj = self.regex_obj.search(text, **kwargs)
 
-        if match_obj == None:
+        if match_obj is None:
             return None
         matches = match_obj.groupdict()
-        for key,match in matches.items():
-            try:
-                if self.type_mapper[key] == 'int':
-                    matches[key] = int(match)
-                if self.type_mapper[key] == 'float':
-                    matches[key] = float(match)
-            except (TypeError, KeyError) as e:
-                pass
+        if type_coercion is True:
+            for key, match in matches.items():
+                try:
+                    if self.type_mapper[key] == 'int':
+                        matches[key] = int(match)
+                    if self.type_mapper[key] == 'float':
+                        matches[key] = float(match)
+                except (TypeError, KeyError) as e:
+                    pass
         return matches
 
 
